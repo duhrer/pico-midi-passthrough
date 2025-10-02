@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.12)
 
-set(NAME pico-midi-transformer)
+set(NAME pico-midi-passthrough)
 
 include(pico_sdk_import.cmake)
 
@@ -24,7 +24,7 @@ add_subdirectory(${PICO_PIO_USB_PATH} ${CMAKE_BINARY_DIR}/Pico-PIO-USB)
 
 # Add your source files
 add_executable(${NAME}
-    src/pico-midi-transformer.c
+    src/pico-midi-passthrough.c
     src/usb_descriptors.c
 )
 

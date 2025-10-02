@@ -47,7 +47,7 @@ extern "C" {
 #endif
 
 #ifndef CFG_TUSB_OS
-#define CFG_TUSB_OS                 OPT_OS_PICO
+#define CFG_TUSB_OS                 OPT_OS_NONE
 #endif
 
 // CFG_TUSB_DEBUG is defined by compiler in DEBUG build
@@ -95,8 +95,8 @@ extern "C" {
 #define CFG_TUD_VENDOR          0
 
 // MIDI FIFO size of TX and RX
-#define CFG_TUD_MIDI_RX_BUFSIZE   (TUD_OPT_HIGH_SPEED ? 512 : 64)
-#define CFG_TUD_MIDI_TX_BUFSIZE   (TUD_OPT_HIGH_SPEED ? 512 : 64)
+#define CFG_TUD_MIDI_RX_BUFSIZE   128
+#define CFG_TUD_MIDI_TX_BUFSIZE   128
 
 //--------------------------------------------------------------------
 // HOST CONFIGURATION
@@ -106,7 +106,7 @@ extern "C" {
 
 // RHPort number used for host can be defined by board.mk, default to port 0
 #ifndef BOARD_TUH_RHPORT
-#define BOARD_TUH_RHPORT      0
+#define BOARD_TUH_RHPORT      1
 #endif
 
 // RHPort max operational speed can defined by board.mk
@@ -121,19 +121,27 @@ extern "C" {
 // Size of buffer to hold descriptors and other data used for enumeration
 #define CFG_TUH_ENUMERATION_BUFSIZE 256
 
-#ifndef CFG_TUH_MEM_SECTION
-#define CFG_TUH_MEM_SECTION
-#endif
+// #ifndef CFG_TUH_MEM_SECTION
+// #define CFG_TUH_MEM_SECTION
+// #endif
 
-#ifndef CFG_TUH_MEM_ALIGN
-#define CFG_TUH_MEM_ALIGN           __attribute__ ((aligned(4)))
-#endif
+// #ifndef CFG_TUH_MEM_ALIGN
+// #define CFG_TUH_MEM_ALIGN           __attribute__ ((aligned(4)))
+// #endif
 
-#define CFG_TUH_HUB                 1
+#define CFG_TUH_HUB                 1 // Enable USB hubs
+#define CFG_TUH_CDC                 0
+#define CFG_TUH_HID                 0 // typical keyboard + mouse device can have 3-4 HID interfaces
+#define CFG_TUH_MSC                 0
+#define CFG_TUH_VENDOR              0
+
 // max device support (excluding hub device)
 #define CFG_TUH_DEVICE_MAX          (CFG_TUH_HUB ? 4 : 1) // hub typically has 4 ports
 
 #define CFG_TUH_MIDI                CFG_TUH_DEVICE_MAX
+
+#define CFG_TUH_MIDI_RX_BUFSIZE 128
+#define CFG_TUH_MIDI_TX_BUFSIZE 128
 
 #ifdef __cplusplus
 }
